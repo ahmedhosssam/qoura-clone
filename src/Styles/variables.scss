@@ -1,0 +1,15 @@
+@mixin flexCenter($flex-direction) {
+  display: flex;
+  flex-direction: $flex-direction;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin buttonStyle {
+  background-color: transparent;
+  border: none;
+}
+
+@mixin hoverTransition {
+  transition: all 0.2s ease;
+}

@@ -4,6 +4,7 @@ import list from '../../assets/list.svg';
 import answer from '../../assets/answer.svg';
 import spaces from '../../assets/spaces.svg';
 import notification from '../../assets/notification.svg';
+import profile from '../../assets/profile.jpg';
 
 const Header = () => {
   return (
@@ -11,8 +12,8 @@ const Header = () => {
       <div className="left-header">
         <img src={QouraLogo} alt="qoura" className="header-qoura-logo" />
         <div className="header-left-buttons">
-          <button className="header-button">
-            <img src={homePage} />
+          <button className="header-button ">
+            <img className="home-button" src={homePage} />
           </button>
           <button className="header-button">
             <img src={list} />
@@ -31,9 +32,9 @@ const Header = () => {
 
       <input placeholder="🔍 Search Qoura" />
       <div className="right-header">
-        <div className="profile-pic-header-container">
-          <img src />
-        </div>
+        <button className="profile-pic-header-container">
+          <img src={profile} />
+        </button>
       </div>
     </header>
   );

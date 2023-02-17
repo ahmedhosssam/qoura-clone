@@ -1,0 +1,77 @@
+@import './variables.scss';
+header {
+  @include flexCenter(row);
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 100vh;
+  .left-header {
+    @include flexCenter(row);
+    justify-content: space-around;
+    width: 50%;
+    img {
+      @include hoverTransition;
+      max-width: 100px;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+    .header-left-buttons {
+      @include flexCenter(row);
+      gap: 10px;
+
+      button {
+        width: 35px;
+        height: 35px;
+        @include flexCenter(row);
+        @include buttonStyle;
+        cursor: pointer;
+        border-radius: 10px;
+        @include hoverTransition;
+
+        img {
+          width: 27px;
+          height: 27px;
+        }
+
+        &:hover {
+          background-color: rgb(235, 235, 235);
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
+  input {
+    padding: 8px 10px;
+    border: 1px solid rgb(161, 161, 161);
+    @include hoverTransition;
+    width: 40%;
+    &:hover {
+      border-color: blue;
+    }
+    &:focus {
+      border-color: red;
+    }
+  }
+
+  .right-header {
+    @include hoverTransition;
+
+    button {
+      @include buttonStyle;
+      cursor: pointer;
+      img {
+        border-radius: 15px;
+        width: 27px;
+      }
+    }
+
+    &:hover {
+      background-color: rgb(235, 235, 235);
+      opacity: 0.5;
+    }
+  }
+}
