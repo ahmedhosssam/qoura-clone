@@ -1,0 +1,5 @@
+@import './variables.scss';
+
+.homepage-container {
+  @include flexCenter(column);
+}

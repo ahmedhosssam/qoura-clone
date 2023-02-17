@@ -9,6 +9,7 @@ import Homepage from './Components/Homepage/Homepage';
 import './Styles/App.scss';
 import './Styles/header.scss';
 import './Styles/homepage.scss';
+import './Styles/postform.scss';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

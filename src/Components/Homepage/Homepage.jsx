@@ -13,10 +13,10 @@ export default Homepage;
 
 const PostForm = () => {
   return (
-    <div className="post-form">
+    <div className="post-form-container">
       <img src={profile} />
-      <div>
-        <input placeholder="What do you want to ask or share?" />
+      <div className="post-form">
+        <input placeholder="Ask or share something ..." />
         <button>
           <img src={pen} /> Post
         </button>
