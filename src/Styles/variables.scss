@@ -8,6 +8,13 @@
 @mixin buttonStyle {
   background-color: transparent;
   border: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(235, 235, 235);
+    opacity: 0.5;
+  }
 }
 
 @mixin hoverTransition {

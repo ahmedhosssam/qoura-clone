@@ -1,0 +1,57 @@
+@import './variables.scss';
+
+.post-temp-container {
+  @include flexCenter(column);
+  width: 100%;
+  align-items: flex-start;
+  padding: 15px;
+
+  border: 0.5px solid rgb(196, 196, 196);
+  background-color: white;
+  flex-wrap: wrap;
+  flex-shrink: 1;
+
+  .post-header {
+    @include flexCenter(row);
+    gap: 10px;
+    .post-info {
+      p {
+        margin: 0;
+      }
+
+      .post-name {
+        font-weight: 700;
+        cursor: pointer;
+        @include hoverTransition;
+      }
+
+      .post-date {
+        color: rgb(166, 166, 166);
+        font-size: 15px;
+      }
+    }
+
+    img {
+      cursor: pointer;
+      width: 35px;
+      border-radius: 20px;
+    }
+  }
+
+  .post-actions {
+    @include flexCenter(row);
+
+    button {
+      @include flexCenter(row);
+      @include buttonStyle;
+      gap: 5px;
+      border-radius: 15px;
+      // background-color: red;
+      padding: 4px;
+      margin: 0 5px;
+      img {
+        width: 20px;
+      }
+    }
+  }
+}
