@@ -68,5 +68,14 @@ header {
         width: 27px;
       }
     }
+    .profile-pic-header-container {
+      .login-button {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 10px;
+      }
+    }
   }
 }

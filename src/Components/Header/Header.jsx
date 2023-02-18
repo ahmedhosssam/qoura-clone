@@ -4,9 +4,12 @@ import list from '../../assets/list.svg';
 import answer from '../../assets/answer.svg';
 import spaces from '../../assets/spaces.svg';
 import notification from '../../assets/notification.svg';
-import profile from '../../assets/profile.jpg';
+// import profile from '../../assets/profile.jpg';
+import { Link } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({ isAuth }) => {
+  let userProfilePic = localStorage.getItem('userPic');
+
   return (
     <header>
       <div className="left-header">
@@ -33,7 +36,18 @@ const Header = () => {
       <input placeholder="🔍 Search Qoura" />
       <div className="right-header">
         <button className="profile-pic-header-container">
-          <img src={profile} />
+          {isAuth ? (
+            <img src={userProfilePic} />
+          ) : (
+            <div className="login-button">
+              <Link
+                to="/login"
+                style={{ textDecoration: 'none', color: 'white' }}
+              >
+                Login
+              </Link>
+            </div>
+          )}
         </button>
       </div>
     </header>

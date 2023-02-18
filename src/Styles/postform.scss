@@ -20,9 +20,9 @@
     gap: 20px;
     width: 100%;
 
-    .testarea {
-      resize: none;
+    .textarea {
       width: 100%;
+      resize: none;
       height: 50px;
       padding: 10px;
       border-radius: 10px;
@@ -35,6 +35,7 @@
       @include buttonStyle;
       cursor: pointer;
       @include flexCenter(row);
+
       gap: 5px;
       border-radius: 10px;
       align-self: flex-end;

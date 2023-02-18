@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 // Components
-import Header from './Components/Header/Header';
-import Homepage from './Components/Homepage/Homepage';
+
+import App from './app';
 
 // Styles
 import './Styles/App.scss';
@@ -11,10 +11,11 @@ import './Styles/header.scss';
 import './Styles/homepage.scss';
 import './Styles/postform.scss';
 import './Styles/post-temp.scss';
+import './Styles/loginbtn.scss';
+import './Styles/loginpage.scss';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Header />
-    <Homepage />
+    <App />
   </React.StrictMode>
 );

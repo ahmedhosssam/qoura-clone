@@ -1,0 +1,5 @@
+@import './variables.scss';
+
+.login-page {
+  @include flexCenter(column);
+}
