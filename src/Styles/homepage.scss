@@ -1,7 +1,6 @@
 @import './variables.scss';
 
 .homepage-container {
-  @include flexCenter(column);
   max-width: 600px;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
 }

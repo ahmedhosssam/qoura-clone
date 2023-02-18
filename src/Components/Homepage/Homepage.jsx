@@ -2,11 +2,60 @@ import profile from '../../assets/profile.jpg';
 import pen from '../../assets/pen.svg';
 import upvote from '../../assets/upvote.svg';
 import comment from '../../assets/comment.svg';
+// import { useState } from 'react';
 
 const Homepage = () => {
   return (
     <div className="homepage-container">
       <PostForm />
+      <PostTemp
+        src={profile}
+        details="Programming is so easy!"
+        postName="Ahmed Hossam"
+        date="3 min"
+      />
+      <PostTemp
+        src={profile}
+        details="Programming is so easy!"
+        postName="Ahmed Hossam"
+        date="3 min"
+      />
+      <PostTemp
+        src={profile}
+        details="Programming is so easy!"
+        postName="Ahmed Hossam"
+        date="3 min"
+      />
+      <PostTemp
+        src={profile}
+        details="Programming is so easy!"
+        postName="Ahmed Hossam"
+        date="3 min"
+      />
+      <PostTemp
+        src={profile}
+        details="Programming is so easy!"
+        postName="Ahmed Hossam"
+        date="3 min"
+      />
+      <PostTemp
+        src={profile}
+        details="Programming is so easy!"
+        postName="Ahmed Hossam"
+        date="3 min"
+      />
+      <PostTemp
+        src={profile}
+        details="Programming is so easy!"
+        postName="Ahmed Hossam"
+        date="3 min"
+      />
+      <PostTemp
+        src={profile}
+        details="Programming is so easy!"
+        postName="Ahmed Hossam"
+        date="3 min"
+      />
       <PostTemp
         src={profile}
         details="Programming is so easy!"
@@ -37,6 +86,12 @@ const PostForm = () => {
 };
 
 const PostTemp = ({ src, details, postName, date }) => {
+  // const [likes, setLikes] = useState(0);
+
+  // const handleClick = () => {
+  //   setLikes(likes + 1);
+  // };
+
   return (
     <div className="post-temp-container">
       <div className="post-header">
@@ -53,6 +108,7 @@ const PostTemp = ({ src, details, postName, date }) => {
         <button>
           <img className="upvote" src={upvote} />
           <span>Upvote</span>
+          {/* <span>{likes}</span> */}
         </button>
         <button>
           <img src={comment} />

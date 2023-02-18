@@ -2,17 +2,17 @@
 header {
   @include flexCenter(row);
   justify-content: space-between;
-  margin: 0 auto;
-  width: 100vh;
+  gap: 10px;
+  width: 100%;
   .left-header {
     @include flexCenter(row);
     justify-content: space-around;
-    width: 50%;
+    // wi dth: 50%;
     img {
       @include hoverTransition;
       max-width: 100px;
       cursor: pointer;
-
+      margin-right: 10px;
       &:hover {
         opacity: 0.7;
       }
@@ -48,7 +48,7 @@ header {
     padding: 8px 10px;
     border: 1px solid rgb(161, 161, 161);
     @include hoverTransition;
-    width: 40%;
+    // width: 40%;
     &:hover {
       border-color: blue;
     }
@@ -67,11 +67,6 @@ header {
         border-radius: 15px;
         width: 27px;
       }
-    }
-
-    &:hover {
-      background-color: rgb(235, 235, 235);
-      opacity: 0.5;
     }
   }
 }
