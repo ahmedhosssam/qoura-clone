@@ -9,6 +9,9 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  query,
+  limit,
+  orderBy,
 } from 'firebase/firestore';
 import { db, auth } from '../../firebase/firebase-config';
 import { useNavigate } from 'react-router-dom';
@@ -20,11 +23,14 @@ let userProfilePic = localStorage.getItem('userPic');
 const Homepage = () => {
   const [fetchedPosts, setFetchedPosts] = useState([]);
   const postsCollectionRef = collection(db, 'posts');
+
+  const q = query(postsCollectionRef, orderBy('timestamp', 'desc'), limit(30));
+
   let isAuth = localStorage.getItem('isAuth');
 
   useEffect(() => {
     const getPosts = async () => {
-      const data = await getDocs(postsCollectionRef);
+      const data = await getDocs(q);
 
       setFetchedPosts(
         data.docs.map((doc) => ({
@@ -82,6 +88,7 @@ const PostForm = () => {
         email: auth.currentUser.email,
       },
       postContent,
+      timestamp: Date.now(),
     });
     navigate('/');
     location.reload();
