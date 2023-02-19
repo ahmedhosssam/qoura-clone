@@ -8,14 +8,17 @@ import Homepage from './Components/Homepage/Homepage';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 const App = () => {
-  const [isAuth, setIsAuth] = useState(false);
+  const isAuth = localStorage.getItem('isAuth');
   return (
     <div>
       <Router>
-        <Header isAuth={isAuth} />
+        <Header />
         <Routes>
-          <Route path="/" element={<Homepage isAuth={isAuth} />} />
-          <Route path="/login" element={<LoginPage setIsAuth={setIsAuth} />} />
+          <Route path="/" element={<Homepage />} />
+          <Route
+            path="/login"
+            element={isAuth ? <Homepage /> : <LoginPage />}
+          />
         </Routes>
       </Router>
     </div>

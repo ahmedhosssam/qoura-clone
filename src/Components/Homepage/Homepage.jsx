@@ -3,9 +3,17 @@ import pen from '../../assets/pen.svg';
 import upvote from '../../assets/upvote.svg';
 import comment from '../../assets/comment.svg';
 import { useEffect, useState } from 'react';
-import { addDoc, collection, getDocs } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  getDocs,
+  deleteDoc,
+  doc,
+} from 'firebase/firestore';
 import { db, auth } from '../../firebase/firebase-config';
 import { useNavigate } from 'react-router-dom';
+import { async } from '@firebase/util';
+import { onAuthStateChanged } from 'firebase/auth';
 
 let userProfilePic = localStorage.getItem('userPic');
 
@@ -24,14 +32,10 @@ const Homepage = () => {
           id: doc.id,
         }))
       );
-      // console.log(data);
     };
     getPosts();
   }, []);
 
-  // if (fetchedPosts == null) {
-  //   return <p>...</p>;
-  // }
   return (
     <div className="homepage-container">
       {isAuth ? <PostForm /> : ''}
@@ -43,13 +47,14 @@ const Homepage = () => {
             postName={post.author.name}
             date={post.author.time}
             details={post.postContent}
+            id={post.id}
+            email={post.author.email}
           />
         );
       })}
     </div>
   );
 };
-//src, details, postName, date
 
 export default Homepage;
 
@@ -74,10 +79,12 @@ const PostForm = () => {
         id: auth.currentUser.uid,
         photoURL: auth.currentUser.photoURL,
         time: `${dayOfWeek} ${timeOfDay}`,
+        email: auth.currentUser.email,
       },
       postContent,
     });
     navigate('/');
+    location.reload();
   };
   return (
     <div className="post-form-container">
@@ -98,27 +105,51 @@ const PostForm = () => {
   );
 };
 
-const PostTemp = ({ src, details, postName, date }) => {
+const PostTemp = ({ src, details, postName, date, id, email }) => {
   // const [likes, setLikes] = useState(0);
 
   // const handleClick = () => {
   //   setLikes(likes + 1);
   // };
+  const [activeUser, setActiveUser] = useState(false);
 
-  // console.log(src);
-  // console.log(details);
-  // console.log(postName);
-  // console.log(date);
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setActiveUser(true);
+    } else {
+      setActiveUser(false);
+    }
+  });
+
+  const docRef = doc(db, `posts/${id}`);
+  const deletePost = async () => {
+    await deleteDoc(docRef);
+    location.reload();
+  };
 
   return (
-    <div className="post-temp-container">
+    <div className="post-temp-container" key={id}>
       <div className="post-header">
-        <img src={src} />
+        <div className="header-right">
+          <img src={src} />
 
-        <div className="post-info">
-          <p className="post-name">{postName}</p>
-          <p className="post-date">{date}</p>
+          <div className="post-info">
+            <p className="post-name">{postName}</p>
+            <p className="post-date">{date}</p>
+          </div>
         </div>
+
+        {activeUser ? (
+          auth.currentUser.email == email ? (
+            <button className="header-left" onClick={deletePost}>
+              ❌
+            </button>
+          ) : (
+            ''
+          )
+        ) : (
+          ''
+        )}
       </div>
 
       <p className="post-details">{details}</p>
