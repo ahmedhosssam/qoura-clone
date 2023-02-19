@@ -2,5 +2,6 @@
 
 .login-page {
   @include flexCenter(column);
-  margin-top: 50px;
+  text-align: center;
+  margin-top: 30vh;
 }
