@@ -4,7 +4,6 @@ import list from '../../assets/list.svg';
 import answer from '../../assets/answer.svg';
 import spaces from '../../assets/spaces.svg';
 import notification from '../../assets/notification.svg';
-// import profile from '../../assets/profile.jpg';
 import logout from '../../assets/log-out.png';
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
@@ -14,26 +13,16 @@ const Header = () => {
   let userProfilePic = localStorage.getItem('userPic');
   let isAuth = localStorage.getItem('isAuth');
   const [open, setOpen] = useState(false);
-  const [width, setWidth] = useState(700);
-  let menuRef = useRef();
+  const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    let handler = (e) => {
-      if (!menuRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-
     const handleResize = () => {
       setWidth(window.innerWidth);
     };
     window.addEventListener('resize', handleResize);
 
-    document.addEventListener('mousedown', handler);
-
     return () => {
       window.removeEventListener('resize', handleResize);
-      document.removeEventListener('mousedown', handler);
     };
   });
 
