@@ -5,15 +5,12 @@ header {
   top: 0;
   right: 0;
   background-color: white;
-
-  justify-content: space-around;
-
   padding: 10px 0;
-  gap: 10px;
   width: 100%;
+  gap: 15px;
   .left-header {
     @include flexCenter(row);
-    justify-content: space-around;
+    justify-content: space-between;
 
     img {
       @include hoverTransition;
@@ -27,7 +24,7 @@ header {
 
     .header-left-buttons {
       @include flexCenter(row);
-      gap: 10px;
+      gap: 15px;
       margin-left: 25px;
       button {
         width: 35px;
@@ -56,7 +53,7 @@ header {
     border: 1px solid rgb(161, 161, 161);
     border-radius: 10px;
     @include hoverTransition;
-    // width: 40%;
+    width: 20%;
     &:hover {
       border-color: blue;
     }
