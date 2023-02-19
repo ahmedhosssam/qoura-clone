@@ -14,8 +14,9 @@ const Header = () => {
   let userProfilePic = localStorage.getItem('userPic');
   let isAuth = localStorage.getItem('isAuth');
   const [open, setOpen] = useState(false);
-
+  const [width, setWidth] = useState(0);
   let menuRef = useRef();
+
   useEffect(() => {
     let handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
@@ -24,9 +25,16 @@ const Header = () => {
       }
     };
 
+    const handleResize = () => {
+      // console.log('Screen width:', window.innerWidth);
+      setWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+
     document.addEventListener('mousedown', handler);
 
     return () => {
+      window.removeEventListener('resize', handleResize);
       document.removeEventListener('mousedown', handler);
     };
   });
@@ -43,28 +51,36 @@ const Header = () => {
         <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
           <img src={QouraLogo} alt="qoura" className="header-qoura-logo" />
         </Link>
-        <div className="header-left-buttons">
-          <button className="header-button ">
-            <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
-              <img className="home-button" src={homePage} />
-            </Link>
-          </button>
-          <button className="header-button">
-            <img src={list} />
-          </button>
-          <button className="header-button">
-            <img src={answer} />
-          </button>
-          <button className="header-button">
-            <img src={spaces} />
-          </button>
-          <button className="header-button">
-            <img src={notification} />
-          </button>
-        </div>
+        {width >= 600 ? (
+          <div
+            className={
+              width >= 600 ? 'header-left-buttons' : 'header-left-buttons hide'
+            }
+          >
+            <button className="header-button ">
+              <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+                <img className="home-button" src={homePage} />
+              </Link>
+            </button>
+            <button className="header-button">
+              <img src={list} />
+            </button>
+            <button className="header-button">
+              <img src={answer} />
+            </button>
+            <button className="header-button">
+              <img src={spaces} />
+            </button>
+            <button className="header-button">
+              <img src={notification} />
+            </button>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
+      {width >= 600 ? <input placeholder="🔍 Search Qoura" /> : ''}
 
-      <input placeholder="🔍 Search Qoura" />
       <div className="right-header">
         <button className="profile-pic-header-container">
           {isAuth ? (

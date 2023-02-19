@@ -59,7 +59,7 @@ header {
 
   .right-header {
     @include hoverTransition;
-
+    position: relative;
     button {
       @include buttonStyle;
       cursor: pointer;

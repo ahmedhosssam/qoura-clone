@@ -6,7 +6,7 @@ import Header from './Components/Header/Header';
 import Homepage from './Components/Homepage/Homepage';
 
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-
+console.log(window.innerWidth);
 const App = () => {
   const isAuth = localStorage.getItem('isAuth');
   return (
