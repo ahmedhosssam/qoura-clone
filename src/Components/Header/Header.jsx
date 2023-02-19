@@ -8,12 +8,20 @@ import logout from '../../assets/log-out.png';
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { auth } from '../../firebase/firebase-config';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const Header = () => {
   let userProfilePic = localStorage.getItem('userPic');
   let isAuth = localStorage.getItem('isAuth');
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
+  const [userName, setUserName] = useState('');
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUserName(auth.currentUser.displayName);
+    }
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -101,10 +109,10 @@ const Header = () => {
           }}
           className={`dropdown-menu ${open ? 'active' : 'inactive'}`}
         >
-          <h3>
-            Hi,
-            <br />
-          </h3>
+          <h3>Hi, {userName}</h3>
+
+          <br />
+
           <ul>
             <DropdownItem img={userProfilePic} text={'My Profile'} />
 
