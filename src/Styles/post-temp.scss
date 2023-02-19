@@ -2,6 +2,7 @@
 
 .post-temp-container {
   @include flexCenter(column);
+  text-align: start;
   align-items: flex-start;
   padding: 15px;
   margin-top: 15px;
