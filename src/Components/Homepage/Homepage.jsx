@@ -1,4 +1,3 @@
-import profile from '../../assets/profile.jpg';
 import pen from '../../assets/pen.svg';
 import upvote from '../../assets/upvote.svg';
 import comment from '../../assets/comment.svg';

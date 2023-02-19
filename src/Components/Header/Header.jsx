@@ -79,6 +79,12 @@ const Header = () => {
         <button className="profile-pic-header-container">
           {isAuth ? (
             <button
+              onMouseEnter={() => {
+                setOpen(true);
+              }}
+              onMouseLeave={() => {
+                setOpen(false);
+              }}
               onClick={() => {
                 setOpen(!open);
               }}
@@ -94,7 +100,18 @@ const Header = () => {
             </Link>
           )}
         </button>
-        <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
+        <div
+          onMouseEnter={() => {
+            setOpen(open);
+          }}
+          onMouseLeave={() => {
+            setOpen(!open);
+          }}
+          onClick={() => {
+            setOpen(!open);
+          }}
+          className={`dropdown-menu ${open ? 'active' : 'inactive'}`}
+        >
           <h3>
             Hi,
             <br />

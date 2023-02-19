@@ -47,6 +47,7 @@ header {
   input {
     padding: 8px 10px;
     border: 1px solid rgb(161, 161, 161);
+    border-radius: 10px;
     @include hoverTransition;
     // width: 40%;
     &:hover {
