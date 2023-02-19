@@ -112,11 +112,6 @@ const PostForm = () => {
 };
 
 const PostTemp = ({ src, details, postName, date, id, email }) => {
-  // const [likes, setLikes] = useState(0);
-
-  // const handleClick = () => {
-  //   setLikes(likes + 1);
-  // };
   const [activeUser, setActiveUser] = useState(false);
 
   onAuthStateChanged(auth, (user) => {
