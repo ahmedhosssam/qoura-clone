@@ -15,13 +15,6 @@ const Header = () => {
   let isAuth = localStorage.getItem('isAuth');
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
-  const [userName, setUserName] = useState('');
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUserName(auth.currentUser.displayName);
-    }
-  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -109,7 +102,7 @@ const Header = () => {
           }}
           className={`dropdown-menu ${open ? 'active' : 'inactive'}`}
         >
-          <h3>Hi, {userName}</h3>
+          <h3>Hi,</h3>
 
           <br />
 
