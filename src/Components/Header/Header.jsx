@@ -7,8 +7,9 @@ import notification from '../../assets/notification.svg';
 // import profile from '../../assets/profile.jpg';
 import { Link } from 'react-router-dom';
 
-const Header = ({ isAuth }) => {
+const Header = () => {
   let userProfilePic = localStorage.getItem('userPic');
+  let isAuth = localStorage.getItem('isAuth');
 
   return (
     <header>

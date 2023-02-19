@@ -2,74 +2,54 @@ import profile from '../../assets/profile.jpg';
 import pen from '../../assets/pen.svg';
 import upvote from '../../assets/upvote.svg';
 import comment from '../../assets/comment.svg';
-import { useState } from 'react';
-import { addDoc, collection } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db, auth } from '../../firebase/firebase-config';
 import { useNavigate } from 'react-router-dom';
 
 let userProfilePic = localStorage.getItem('userPic');
-const Homepage = ({ isAuth }) => {
+
+const Homepage = () => {
+  const [fetchedPosts, setFetchedPosts] = useState([]);
+  const postsCollectionRef = collection(db, 'posts');
+  let isAuth = localStorage.getItem('isAuth');
+
+  useEffect(() => {
+    const getPosts = async () => {
+      const data = await getDocs(postsCollectionRef);
+
+      setFetchedPosts(
+        data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }))
+      );
+      // console.log(data);
+    };
+    getPosts();
+  }, []);
+
+  // if (fetchedPosts == null) {
+  //   return <p>...</p>;
+  // }
   return (
     <div className="homepage-container">
       {isAuth ? <PostForm /> : ''}
 
-      <PostTemp
-        src={profile}
-        details="Programming is so easy!"
-        postName="Ahmed Hossam"
-        date="3 min"
-      />
-      <PostTemp
-        src={profile}
-        details="Programming is so easy!"
-        postName="Ahmed Hossam"
-        date="3 min"
-      />
-      <PostTemp
-        src={profile}
-        details="Programming is so easy!"
-        postName="Ahmed Hossam"
-        date="3 min"
-      />
-      <PostTemp
-        src={profile}
-        details="Programming is so easy!"
-        postName="Ahmed Hossam"
-        date="3 min"
-      />
-      <PostTemp
-        src={profile}
-        details="Programming is so easy!"
-        postName="Ahmed Hossam"
-        date="3 min"
-      />
-      <PostTemp
-        src={profile}
-        details="Programming is so easy!"
-        postName="Ahmed Hossam"
-        date="3 min"
-      />
-      <PostTemp
-        src={profile}
-        details="Programming is so easy!"
-        postName="Ahmed Hossam"
-        date="3 min"
-      />
-      <PostTemp
-        src={profile}
-        details="Programming is so easy!"
-        postName="Ahmed Hossam"
-        date="3 min"
-      />
-      <PostTemp
-        src={profile}
-        details="Programming is so easy!"
-        postName="Ahmed Hossam"
-        date="3 min"
-      />
+      {fetchedPosts.map((post) => {
+        return (
+          <PostTemp
+            src={post.author.photoURL}
+            postName={post.author.name}
+            date={post.author.time}
+            details={post.postContent}
+          />
+        );
+      })}
     </div>
   );
 };
+//src, details, postName, date
 
 export default Homepage;
 
@@ -87,6 +67,7 @@ const PostForm = () => {
       minute: 'numeric',
       hour12: true,
     });
+
     await addDoc(postsCollectionRef, {
       author: {
         name: auth.currentUser.displayName,
@@ -96,7 +77,6 @@ const PostForm = () => {
       },
       postContent,
     });
-    console.log(`${dayOfWeek} ${timeOfDay}`);
     navigate('/');
   };
   return (
@@ -124,6 +104,11 @@ const PostTemp = ({ src, details, postName, date }) => {
   // const handleClick = () => {
   //   setLikes(likes + 1);
   // };
+
+  // console.log(src);
+  // console.log(details);
+  // console.log(postName);
+  // console.log(date);
 
   return (
     <div className="post-temp-container">
