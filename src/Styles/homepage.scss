@@ -1,6 +1,13 @@
 @import './variables.scss';
 
 .homepage-container {
-  max-width: 600px;
-  // flex-wrap: wrap;
+  display: inline-block;
+  width: 600px;
+  margin-top: 70px;
+}
+
+@media (max-width: 600px) {
+  .homepage-container {
+    width: fit-content;
+  }
 }

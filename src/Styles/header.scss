@@ -1,13 +1,20 @@
 @import './variables.scss';
 header {
   @include flexCenter(row);
-  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: white;
+
+  justify-content: space-around;
+
+  padding: 10px 0;
   gap: 10px;
   width: 100%;
   .left-header {
     @include flexCenter(row);
     justify-content: space-around;
-    // wi dth: 50%;
+
     img {
       @include hoverTransition;
       max-width: 100px;
@@ -21,7 +28,7 @@ header {
     .header-left-buttons {
       @include flexCenter(row);
       gap: 10px;
-
+      margin-left: 25px;
       button {
         width: 35px;
         height: 35px;
@@ -75,8 +82,11 @@ header {
         color: white;
         border: none;
         padding: 8px 15px;
-        border-radius: 10px;
+        &:hover {
+          background-color: none;
+        }
       }
+      border-radius: 20px;
     }
   }
 }

@@ -1,4 +1,4 @@
-import QouraLogo from '../../assets/Quora.svg.png';
+import QouraLogo from '../../assets/-4-ans_frontend_assets.webp';
 import homePage from '../../assets/home-svgrepo-com.svg';
 import list from '../../assets/list.svg';
 import answer from '../../assets/answer.svg';
