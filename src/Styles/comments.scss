@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 .comments {
   align-self: center;
   display: flex;
@@ -25,12 +27,23 @@
 .comment-temp {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgb(156, 156, 156);
+
+  border-bottom: 1px solid rgb(208, 208, 208);
   border-radius: 10px;
   padding: 10px 15px;
   transition: all 0.3s ease;
 
   .comment-header {
+    @include flexCenter(row);
+    justify-content: space-between;
+    margin-bottom: 2px;
+    .comment-user-info {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
     display: flex;
     align-items: center;
     gap: 6px;
@@ -48,13 +61,22 @@
   }
 
   p {
-    margin: 0;
-    margin-top: 10px;
-    font-size: 17px;
+    margin: 15px 0;
+    font-size: 15px;
     font-weight: 600;
   }
 
   &:hover {
     background-color: rgb(222, 222, 222);
+  }
+
+  button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }

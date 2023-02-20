@@ -14,7 +14,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db, auth } from '../../firebase/firebase-config';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { async } from '@firebase/util';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -114,13 +114,10 @@ const PostForm = () => {
 
 const PostTemp = ({ src, details, postName, date, id, email }) => {
   const [activeUser, setActiveUser] = useState(false);
-  const [comment, setPostContent] = useState();
 
   const postCollectionRef = doc(db, 'posts', `${id}`);
   const commentsRef = collection(postCollectionRef, 'comments');
   const [fetchedComments, setFetchedComments] = useState([]);
-
-  const q = query(commentsRef, orderBy('timestamp', 'desc'), limit(3));
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -143,7 +140,6 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
       });
     };
     getPosts();
-    console.log(fetchedComments);
   }, []);
 
   const docRef = doc(db, `posts/${id}`);
@@ -191,9 +187,13 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
           <img className="upvote" src={upvote} />
           <span>Upvote</span>
         </button>
-        <button>
-          <img src={commentPic} />
-        </button>
+        {
+          <Link to="/login">
+            <button>
+              <img src={commentPic} />
+            </button>
+          </Link>
+        }
       </div>
       <div className="comments">
         <CommentForm activeUser={activeUser} postId={id} />
@@ -205,6 +205,9 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
                 pic={comment.pic}
                 commentContent={comment.commentContent}
                 id={comment.id}
+                postId={id}
+                email={comment.email}
+                activeUser={activeUser}
               />
             );
           })}
@@ -274,6 +277,8 @@ const CommentForm = ({ activeUser, postId }) => {
       name: auth.currentUser.displayName,
       pic: auth.currentUser.photoURL,
       commentContent: commentContent,
+      email: auth.currentUser.email,
+      timestamp: Date.now(),
     });
 
     location.reload();
@@ -296,12 +301,37 @@ const CommentForm = ({ activeUser, postId }) => {
   );
 };
 
-const CommentTemp = ({ name, pic, commentContent, id }) => {
+const CommentTemp = ({
+  name,
+  pic,
+  commentContent,
+  id,
+  email,
+  activeUser,
+  postId,
+}) => {
+  const commentRef = doc(db, 'posts', `${postId}`, 'comments', id);
+  const deleteComment = async () => {
+    await deleteDoc(commentRef);
+    location.reload();
+  };
   return (
     <div className="comment-temp" key={id}>
       <div className="comment-header">
-        <img src={pic} alt="pic" />
-        <p>{name}</p>
+        <div className="comment-user-info">
+          <img src={pic} alt="pic" />
+          <p>{name}</p>
+        </div>
+
+        {activeUser ? (
+          auth.currentUser.email == email ? (
+            <button onClick={deleteComment}>❌</button>
+          ) : (
+            ''
+          )
+        ) : (
+          ''
+        )}
       </div>
       <p>{commentContent}</p>
     </div>
