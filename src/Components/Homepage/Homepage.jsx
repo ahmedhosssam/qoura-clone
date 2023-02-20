@@ -208,6 +208,7 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
                 postId={id}
                 email={comment.email}
                 activeUser={activeUser}
+                time={comment.timestamp}
               />
             );
           })}
@@ -309,18 +310,34 @@ const CommentTemp = ({
   email,
   activeUser,
   postId,
+  time,
 }) => {
   const commentRef = doc(db, 'posts', `${postId}`, 'comments', id);
   const deleteComment = async () => {
     await deleteDoc(commentRef);
     location.reload();
   };
+
+  // time posted :
+
+  const dateObj = new Date(time);
+  const dayOfWeek = dateObj.toLocaleString('en-US', { weekday: 'short' });
+  const timeOfDay = dateObj.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
+
+  const timePosted = `${dayOfWeek} ${timeOfDay}`;
+
   return (
     <div className="comment-temp" key={id}>
       <div className="comment-header">
         <div className="comment-user-info">
           <img src={pic} alt="pic" />
-          <p>{name}</p>
+          <div>
+            <p className="comment-name">{name}</p>
+          </div>
         </div>
 
         {activeUser ? (
@@ -334,6 +351,7 @@ const CommentTemp = ({
         )}
       </div>
       <p>{commentContent}</p>
+      <p className="comment-time">{timePosted}</p>
     </div>
   );
 };

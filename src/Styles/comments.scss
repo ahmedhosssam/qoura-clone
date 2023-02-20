@@ -47,7 +47,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    p {
+    .comment-name {
       font-size: 15px;
       margin: 0;
       font-weight: 600;
@@ -64,6 +64,13 @@
     margin: 15px 0;
     font-size: 15px;
     font-weight: 600;
+  }
+
+  .comment-time {
+    color: rgb(79, 79, 79);
+    font-size: 13px;
+    margin: 0;
+    align-self: flex-end;
   }
 
   &:hover {
