@@ -11,6 +11,7 @@ import {
   query,
   limit,
   orderBy,
+  updateDoc,
 } from 'firebase/firestore';
 import { db, auth } from '../../firebase/firebase-config';
 import { useNavigate } from 'react-router-dom';
@@ -113,6 +114,7 @@ const PostForm = () => {
 
 const PostTemp = ({ src, details, postName, date, id, email }) => {
   const [activeUser, setActiveUser] = useState(false);
+  // const [postContent, setPostContent] = useState();
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -128,6 +130,8 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
     location.reload();
   };
 
+  const handleEditPost = () => {};
+
   return (
     <div className="post-temp-container" key={id}>
       <div className="post-header">
@@ -142,9 +146,11 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
 
         {activeUser ? (
           auth.currentUser.email == email ? (
-            <button className="header-left" onClick={deletePost}>
-              ❌
-            </button>
+            <div className="header-actions">
+              <button className="header-left" onClick={deletePost}>
+                ❌
+              </button>
+            </div>
           ) : (
             ''
           )
@@ -153,17 +159,52 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
         )}
       </div>
 
-      <p className="post-details">{details}</p>
+      <PostDetails details={details} id={id} />
+
       <div className="post-actions">
         <button>
           <img className="upvote" src={upvote} />
           <span>Upvote</span>
-          {/* <span>{likes}</span> */}
         </button>
         <button>
           <img src={comment} />
         </button>
       </div>
+    </div>
+  );
+};
+
+const PostDetails = ({ details, id }) => {
+  const [isEditActive, setIsEditActive] = useState(false);
+  const [postContent, setPostContent] = useState(details);
+  const documentRef = doc(db, 'posts', `${id}`);
+
+  const handleEditPostButton = () => {
+    isEditActive ? updatePost() : setIsEditActive(true);
+  };
+
+  const handleEditPost = (e) => {
+    setPostContent(e.target.value);
+  };
+
+  const updatePost = async () => {
+    await updateDoc(documentRef, { postContent: postContent });
+
+    location.reload();
+  };
+
+  return (
+    <div className="post-details-container">
+      <p className="post-details">
+        {isEditActive ? (
+          <textarea onChange={handleEditPost} value={postContent} />
+        ) : (
+          details
+        )}
+      </p>
+      <button onClick={handleEditPostButton}>
+        {isEditActive ? 'Save' : 'Edit'}
+      </button>
     </div>
   );
 };
