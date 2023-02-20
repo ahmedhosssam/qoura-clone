@@ -57,23 +57,29 @@
   .post-details {
     font-size: 17px;
     font-weight: 500;
+    // margin-left: 8px;
   }
 
   .post-actions {
     @include flexCenter(row);
-
+    margin-left: -10px;
     button {
       @include flexCenter(row);
       @include buttonStyle;
       gap: 5px;
       border-radius: 15px;
-      // background-color: red;
       padding: 4px;
       margin: 0 5px;
       img {
         width: 20px;
       }
     }
+  }
+
+  .textarea {
+    margin-top: 10px;
+    margin-left: -1px;
+    height: 20px;
   }
 }
 

@@ -1,6 +1,6 @@
 import pen from '../../assets/pen.svg';
 import upvote from '../../assets/upvote.svg';
-import comment from '../../assets/comment.svg';
+import commentPic from '../../assets/comment.svg';
 import { useEffect, useState } from 'react';
 import {
   addDoc,
@@ -114,7 +114,13 @@ const PostForm = () => {
 
 const PostTemp = ({ src, details, postName, date, id, email }) => {
   const [activeUser, setActiveUser] = useState(false);
-  // const [postContent, setPostContent] = useState();
+  const [comment, setPostContent] = useState();
+
+  const postCollectionRef = doc(db, 'posts', `${id}`);
+  const commentsRef = collection(postCollectionRef, 'comments');
+  const [fetchedComments, setFetchedComments] = useState([]);
+
+  const q = query(commentsRef, orderBy('timestamp', 'desc'), limit(3));
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -124,13 +130,27 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
     }
   });
 
+  // To get the comments of the post
+  useEffect(() => {
+    const getPosts = async () => {
+      await getDocs(commentsRef).then((querySnapshot) => {
+        setFetchedComments(
+          querySnapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }))
+        );
+      });
+    };
+    getPosts();
+    console.log(fetchedComments);
+  }, []);
+
   const docRef = doc(db, `posts/${id}`);
   const deletePost = async () => {
     await deleteDoc(docRef);
     location.reload();
   };
-
-  const handleEditPost = () => {};
 
   return (
     <div className="post-temp-container" key={id}>
@@ -172,8 +192,23 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
           <span>Upvote</span>
         </button>
         <button>
-          <img src={comment} />
+          <img src={commentPic} />
         </button>
+      </div>
+      <div>
+        <CommentForm activeUser={activeUser} postId={id} />
+        <div className="comments-container">
+          {fetchedComments.map((comment) => {
+            return (
+              <CommentTemp
+                name={comment.name}
+                pic={comment.pic}
+                commentContent={comment.commentContent}
+                id={comment.id}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
@@ -218,6 +253,56 @@ const PostDetails = ({ details, id, activeUser, email }) => {
       ) : (
         ''
       )}
+    </div>
+  );
+};
+
+const CommentForm = ({ activeUser, postId }) => {
+  const [commentContent, setCommentContent] = useState('');
+  const documentRef = doc(db, 'posts', `${postId}`);
+  const commentsCollection = collection(documentRef, 'comments');
+
+  const handleCommentContent = (e) => {
+    setCommentContent(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    await addDoc(commentsCollection, {
+      name: auth.currentUser.displayName,
+      pic: auth.currentUser.photoURL,
+      commentContent: commentContent,
+    });
+
+    location.reload();
+  };
+  return (
+    <div>
+      {activeUser ? (
+        <form onSubmit={handleSubmit}>
+          <input
+            onChange={handleCommentContent}
+            placeholder="Write a comment"
+            className="textarea"
+            rows="1"
+          />
+        </form>
+      ) : (
+        ''
+      )}
+    </div>
+  );
+};
+
+const CommentTemp = ({ name, pic, commentContent, id }) => {
+  return (
+    <div className="comment-temp" key={id}>
+      <div className="comment-header">
+        <img src={pic} alt="pic" />
+        <p>{name}</p>
+      </div>
+      <div>{commentContent}</div>
     </div>
   );
 };
