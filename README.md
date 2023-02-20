@@ -15,6 +15,7 @@ https://ibb.co/5WYSj02
 - Create Posts
 - Edit Post Content
 - Delete Posts
+- Add Comments
 - Responsive Design
 
 ## Installation
