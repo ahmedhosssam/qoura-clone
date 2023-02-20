@@ -13,6 +13,7 @@ https://ibb.co/5WYSj02
 - Firebase Database ( Firestore )
 - Google Sign In Authentication
 - Create Posts
+- Edit Post Content
 - Delete Posts
 - Responsive Design
 
