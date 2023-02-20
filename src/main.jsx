@@ -14,6 +14,7 @@ import './Styles/post-temp.scss';
 import './Styles/loginbtn.scss';
 import './Styles/loginpage.scss';
 import './Styles/dropdown.scss';
+import './Styles/comments.scss';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

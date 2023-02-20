@@ -195,7 +195,7 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
           <img src={commentPic} />
         </button>
       </div>
-      <div>
+      <div className="comments">
         <CommentForm activeUser={activeUser} postId={id} />
         <div className="comments-container">
           {fetchedComments.map((comment) => {
@@ -259,6 +259,7 @@ const PostDetails = ({ details, id, activeUser, email }) => {
 
 const CommentForm = ({ activeUser, postId }) => {
   const [commentContent, setCommentContent] = useState('');
+
   const documentRef = doc(db, 'posts', `${postId}`);
   const commentsCollection = collection(documentRef, 'comments');
 
@@ -278,7 +279,7 @@ const CommentForm = ({ activeUser, postId }) => {
     location.reload();
   };
   return (
-    <div>
+    <div className="comment-form">
       {activeUser ? (
         <form onSubmit={handleSubmit}>
           <input
@@ -302,7 +303,7 @@ const CommentTemp = ({ name, pic, commentContent, id }) => {
         <img src={pic} alt="pic" />
         <p>{name}</p>
       </div>
-      <div>{commentContent}</div>
+      <p>{commentContent}</p>
     </div>
   );
 };
