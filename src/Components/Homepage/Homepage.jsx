@@ -159,7 +159,12 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
         )}
       </div>
 
-      <PostDetails details={details} id={id} />
+      <PostDetails
+        details={details}
+        id={id}
+        activeUser={activeUser}
+        email={email}
+      />
 
       <div className="post-actions">
         <button>
@@ -174,7 +179,7 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
   );
 };
 
-const PostDetails = ({ details, id }) => {
+const PostDetails = ({ details, id, activeUser, email }) => {
   const [isEditActive, setIsEditActive] = useState(false);
   const [postContent, setPostContent] = useState(details);
   const documentRef = doc(db, 'posts', `${id}`);
@@ -202,9 +207,17 @@ const PostDetails = ({ details, id }) => {
           details
         )}
       </p>
-      <button onClick={handleEditPostButton}>
-        {isEditActive ? 'Save' : 'Edit'}
-      </button>
+      {activeUser ? (
+        auth.currentUser.email == email ? (
+          <button onClick={handleEditPostButton}>
+            {isEditActive ? 'Save' : 'Edit'}
+          </button>
+        ) : (
+          ''
+        )
+      ) : (
+        ''
+      )}
     </div>
   );
 };
