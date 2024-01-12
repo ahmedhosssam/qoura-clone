@@ -6,17 +6,15 @@ import.meta.env.VITE_API_KEY
 import.meta.env.VITE_MASSEGINGSENDERID
 import.meta.env.VITE_APPID
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_API_KEY,
+  apiKey: 'AIzaSyB5AJoJL0kFCErIIiaMUwxlUA6u9SswUhs',
   authDomain: 'qoura-94df1.firebaseapp.com',
   projectId: 'qoura-94df1',
   storageBucket: 'qoura-94df1.appspot.com',
-  messagingSenderId: import.meta.env.VITE_MASSEGINGSENDERID,
-  appId: import.meta.env.VITE_APPID
+  messagingSenderId: '665413498195',
+  appId: '1:665413498195:web:4e83bec4c449949e9a1da6',
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
