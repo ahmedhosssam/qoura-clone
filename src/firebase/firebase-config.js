@@ -2,17 +2,20 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import.meta.env.VITE_API_KEY
+import.meta.env.VITE_MASSEGINGSENDERID
+import.meta.env.VITE_APPID
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyB5AJoJL0kFCErIIiaMUwxlUA6u9SswUhs',
+  apiKey: import.meta.env.VITE_API_KEY,
   authDomain: 'qoura-94df1.firebaseapp.com',
   projectId: 'qoura-94df1',
   storageBucket: 'qoura-94df1.appspot.com',
-  messagingSenderId: '665413498195',
-  appId: '1:665413498195:web:4e83bec4c449949e9a1da6',
+  messagingSenderId: import.meta.env.VITE_MASSEGINGSENDERID,
+  appId: import.meta.env.VITE_APPID
 };
 
 // Initialize Firebase

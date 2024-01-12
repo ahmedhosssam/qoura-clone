@@ -15,7 +15,6 @@ import {
 } from 'firebase/firestore';
 import { db, auth } from '../../firebase/firebase-config';
 import { Link, useNavigate } from 'react-router-dom';
-import { async } from '@firebase/util';
 import { onAuthStateChanged } from 'firebase/auth';
 
 let userProfilePic = localStorage.getItem('userPic');
@@ -93,6 +92,7 @@ const PostForm = () => {
     navigate('/');
     location.reload();
   };
+
   return (
     <div className="post-form-container">
       <img src={userProfilePic} />
@@ -104,9 +104,7 @@ const PostForm = () => {
           className="textarea"
           placeholder="Ask or share something ..."
         />
-        <button onClick={sendPost}>
-          <img src={pen} /> Post
-        </button>
+        <button onClick={sendPost}><img src={pen}/>Post</button>
       </div>
     </div>
   );
@@ -120,29 +118,35 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
   const [fetchedComments, setFetchedComments] = useState([]);
 
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setActiveUser(true);
-    } else {
-      setActiveUser(false);
-    }
+    // if (user) {
+    //   setActiveUser(true);
+    // } else {
+    //   setActiveUser(false);
+    // }
+    user ? setActiveUser(true) : setActiveUser(false);
   });
 
   // To get the comments of the post
   useEffect(() => {
     const getPosts = async () => {
       await getDocs(commentsRef).then((querySnapshot) => {
-        setFetchedComments(
-          querySnapshot.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-          }))
-        );
+        try {
+          setFetchedComments(
+            querySnapshot.docs.map((doc) => ({
+              ...doc.data(),
+              id: doc.id,
+            }))
+          );
+        } catch (error) {
+          console.error("Error while fetching data: ", error.message)
+        }
       });
     };
     getPosts();
   }, []);
 
   const docRef = doc(db, `posts/${id}`);
+
   const deletePost = async () => {
     await deleteDoc(docRef);
     location.reload();
@@ -167,12 +171,7 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
                 ❌
               </button>
             </div>
-          ) : (
-            ''
-          )
-        ) : (
-          ''
-        )}
+            ) : ('')) : ('')}
       </div>
 
       <PostDetails
@@ -187,14 +186,13 @@ const PostTemp = ({ src, details, postName, date, id, email }) => {
           <img className="upvote" src={upvote} />
           <span>Upvote</span>
         </button>
-        {
-          <Link to="/login">
+        {<Link to="/login">
             <button>
               <img src={commentPic} />
             </button>
-          </Link>
-        }
+          </Link>}
       </div>
+
       <div className="comments">
         <CommentForm activeUser={activeUser} postId={id} />
         <div className="comments-container">
@@ -233,7 +231,6 @@ const PostDetails = ({ details, id, activeUser, email }) => {
 
   const updatePost = async () => {
     await updateDoc(documentRef, { postContent: postContent });
-
     location.reload();
   };
 
@@ -246,17 +243,12 @@ const PostDetails = ({ details, id, activeUser, email }) => {
           details
         )}
       </p>
+
       {activeUser ? (
         auth.currentUser.email == email ? (
           <button onClick={handleEditPostButton}>
             {isEditActive ? 'Save' : 'Edit'}
-          </button>
-        ) : (
-          ''
-        )
-      ) : (
-        ''
-      )}
+          </button>) : ('')) : ('')}
     </div>
   );
 };
@@ -274,14 +266,18 @@ const CommentForm = ({ activeUser, postId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await addDoc(commentsCollection, {
-      name: auth.currentUser.displayName,
-      pic: auth.currentUser.photoURL,
-      commentContent: commentContent,
-      email: auth.currentUser.email,
-      timestamp: Date.now(),
-    });
-
+    try {
+      await addDoc(commentsCollection, {
+        name: auth.currentUser.displayName,
+        pic: auth.currentUser.photoURL,
+        commentContent: commentContent,
+        email: auth.currentUser.email,
+        timestamp: Date.now(),
+      });
+    } catch (error) {
+        console.error("Error while fetching data: ", error.message)
+    }
+    
     location.reload();
   };
   return (
@@ -294,10 +290,7 @@ const CommentForm = ({ activeUser, postId }) => {
             className="textarea"
             rows="1"
           />
-        </form>
-      ) : (
-        ''
-      )}
+        </form>):('')}
     </div>
   );
 };
@@ -318,8 +311,7 @@ const CommentTemp = ({
     location.reload();
   };
 
-  // time posted :
-
+  // to get the time
   const dateObj = new Date(time);
   const dayOfWeek = dateObj.toLocaleString('en-US', { weekday: 'short' });
   const timeOfDay = dateObj.toLocaleTimeString('en-US', {
@@ -343,12 +335,7 @@ const CommentTemp = ({
         {activeUser ? (
           auth.currentUser.email == email ? (
             <button onClick={deleteComment}>❌</button>
-          ) : (
-            ''
-          )
-        ) : (
-          ''
-        )}
+          ):('')):('')}
       </div>
       <p>{commentContent}</p>
       <p className="comment-time">{timePosted}</p>
